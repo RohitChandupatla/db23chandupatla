@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1= title
+  
+  - let houses=[{type_of_house :"Wooden_House",location:"603 E 7TH ST Maryville",pin_code:"64468"},{type_of_house:"Brick",location:"604 E 8th ST Maryville",pin_code:"64468"},{type_of_house:"Bricks",location:"609 E 9TH ST Maryville",pin_code:"64468"}]
+    div(class="container-fluid mt-3")
+    div(class="row")
+        each house,index in houses
+            div(class="col-sm-2 bg-danger m-1 p-3" onclick=`buy(${index})`) #{house.type_of_house} - #{house.location} - #{house.pincode}
+    script.
+     
+      function buy(itemNo)
+      {
+        alert(`You purchased Item ${itemNo+1}`)
+      }

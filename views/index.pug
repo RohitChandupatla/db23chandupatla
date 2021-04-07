@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  p this is Rohit 
+  button(type="button",onclick="update()" class="btn btn-danger") Click Here!!
+  div(id="target") clickme
+  script.
+    var client_count=0;
+    function update() {
+      client_count++;
+      document.getElementById("target").innerHTML=`Value now ${client_count}`
+    }
+  a(href="/house") go to houses
