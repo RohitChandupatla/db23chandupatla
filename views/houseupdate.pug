@@ -3,41 +3,44 @@ extends layout
 block content
   h1= title
 
-  - let houseid = toShow._id
-  - let housetype_of_house = toShow.type_of_house
-  - let houselocation = toShow.location 
-  - let housepincode = toShow.pincode
-  
-  div.row(class='mb-2')
-    div.mr-1 ID is
-    div #{houseid}
-  - let actionid = "/resource/resource/houses/" + houseid
-  form(id='houseForm', action= actionid, method="PUT")
-    div.form-group
-        label.houseAttr(for='housetype') type of house
-        input#housetype(type='text', name='housetype', value= housetype_of_house )
-    div.form-group
-        label.houseAttr(for='location') house location
-        input#size(type='text', name='size', value= houselocation )
-    div.form-group
-        label.houseAttr(for='pincode') house pincode
-        input#cost(type='number', name='cost', value= housepincode )
-    input(type="submit")
+  if (toShow == null)
+   h2 No instance to delete
+  else
+    - let houseid = toShow._id
+    - let housetype_of_house = toShow.type_of_house
+    - let houselocation = toShow.location 
+    - let housepincode = toShow.pincode
+    
+    div.row(class='mb-2')
+        div.mr-1 ID is
+        div #{houseid}
+    - let actionid = "/resource/resource/houses/" + houseid
+    form(id='houseForm', action= actionid, method="PUT")
+        div.form-group
+            label.houseAttr(for='housetype') type of house
+            input#housetype(type='text', name='housetype', value= housetype_of_house )
+        div.form-group
+            label.houseAttr(for='location') house location
+            input#size(type='text', name='size', value= houselocation )
+        div.form-group
+            label.houseAttr(for='pincode') house pincode
+            input#cost(type='number', name='cost', value= housepincode )
+        input(type="submit")
 
-  script.
-    document.forms['houseForm'].addEventListener('submit', (event) => {
-      event.preventDefault();
-      // TODO do something here to show user that form is being submitted
-      fetch(event.target.action, {
-        method: 'PUT',
-        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
-      }).then((resp) => {
-        return resp.json(); // or resp.text() or whatever the server sends
-      }).then((body) => {
-        alert("Update succeded")
-        // TODO handle body
-      }).catch((error) => {
-        // TODO handle error
-        alert("Update failed " + error )
-      });
-    });
+    script.
+        document.forms['houseForm'].addEventListener('submit', (event) => {
+        event.preventDefault();
+        // TODO do something here to show user that form is being submitted
+        fetch(event.target.action, {
+            method: 'PUT',
+            body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+        }).then((resp) => {
+            return resp.json(); // or resp.text() or whatever the server sends
+        }).then((body) => {
+            alert("Update succeded")
+            // TODO handle body
+        }).catch((error) => {
+            // TODO handle error
+            alert("Update failed " + error )
+        });
+        });
