@@ -46,11 +46,22 @@ exports.house_create_post = async function(req, res) {
     } 
 };
 // Handle house delete form on DELETE.
-exports.house_delete = function(req, res) {
-res.send('NOT IMPLEMENTED: house delete DELETE ' + req.params.id);
+// Handle house delete on DELETE.
+exports.house_delete = async function(req, res) {
+    console.log("delete "  + req.params.id)
+    try {
+        result = await house.findByIdAndDelete( req.params.id)
+        console.log("Removed " + result)
+        res.send(result)
+    } catch (err) {
+        res.status(500)
+        res.send(`{"error": Error deleting ${err}}`);
+    }
 };
+
+
 // Handle house update form on PUT.
-// Handle Costume update form on PUT.
+// Handle house update form on PUT.
 exports.house_update_put = async function(req, res) {
     console.log(`update on id ${req.params.id} with body ${JSON.stringify(req.body)}`)
     try {
@@ -81,3 +92,61 @@ exports.house_view_all_Page = async function(req, res) {
         res.send(`{"error": ${err}}`);
     } 
 };
+
+// Handle a show one view with id specified by query
+exports.house_view_one_Page = async function(req, res) {
+    console.log("single view for id "  + req.query.id)
+    try{
+        result = await house.findById( req.query.id)
+        res.render('housedetail', 
+{ title: 'house Detail', toShow: result });
+    }
+    catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
+// Handle building the view for creating a house.
+// No body, no in path parameter, no query.
+// Does not need to be async
+exports.house_create_Page =  function(req, res) {
+    console.log("create view")
+    try{
+        res.render('housecreate', { title: 'house Create'});
+    }
+    catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
+// Handle building the view for updating a house.
+// query provides the id
+exports.house_update_Page =  async function(req, res) {
+    console.log("update view for item "+req.query.id)
+    try{
+        let result = await house.findById(req.query.id)
+        res.render('houseupdate', { title: 'house Update', toShow: result });
+    }
+    catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
+// Handle a delete one view with id from query
+exports.house_delete_Page = async function(req, res) {
+    console.log("Delete view for id "  + req.query.id)
+    try{
+        result = await house.findById(req.query.id)
+        res.render('housedelete', { title: 'house Delete', toShow: result });
+    }
+    catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
+
+

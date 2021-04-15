@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1= title
+
+  - let houseid = toShow._id
+  - let housetype_of_house = toShow.type_of_house
+  - let houselocation = toShow.location
+  - let housepincode = toShow.pincode
+  div
+    div.row
+      div(class='houseAttr mr-3') house ID is:
+      div #{houseid}
+    div.row
+      div(class='houseAttr mr-3')  type of house is:
+      div #{housetype_of_house}
+    div.row
+      div(class='houseAttr mr-3') house Location is:
+      div #{houselocation}
+    div.row
+      div(class='houseAttr mr-3') house Pincode is:
+      div #{housepincode}
