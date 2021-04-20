@@ -6,12 +6,13 @@ block content
   //- let houses=[{type_of_house :"Wooden_House",location:"603 E 7TH ST Maryville",pin_code:"64468"},{type_of_house:"Brick",location:"604 E 8th ST Maryville",pin_code:"64468"},{type_of_house:"Bricks",location:"609 E 9TH ST Maryville",pin_code:"64468"}]
   - let houses = results
   div(class="container-fluid mt-3")
-  div(class="row")
-   each house,index in houses
-    div(class="col-sm-2 bg-danger m-1 p-3" onclick=`buy(${index})`) #{house.type_of_house} #{house.location}  #{house.pincode}
-  script.
+  div(class="row m-1")
      
-      function buy(itemNo)
-      {
-        alert(`You purchased Item ${itemNo+1}`)
-      }
+    each house,index in houses
+     - let destination = `dispatch(\"/house/update?id=${house._id}\")`
+       div(class="col-sm-2 bg-danger m-1 p-3" onclick=`buy(${index})`) #{house.type_of_house} #{house.location}  #{house.pincode}
+        button.btn( class="btn-primary ml-1", onclick= destination) Update.
+  script.
+     function dispatch(path){
+       window.location.href=path
+    }
